@@ -1,20 +1,20 @@
 import processing.serial.*;
 
-Serial myPort; 
-String val;    
-int[] data; 
+Serial myPort;
+String val;
+int[] data;
 double[] summed;
 int draw_sum=0;
 
 double find_max(double[] input)
 {
   double max = 0;
-  for (int i = 0; i < input.length; i++) 
+  for (int i = 0; i < input.length; i++)
   {
     if (input[i] > max)
     {
       max = input[i];
-    }            
+    }
   }
   return max;
 }
@@ -22,9 +22,9 @@ double find_max(double[] input)
 void plotdata()
 {
 
-  double summed_max = (find_max(summed))/875;
+  double summed_max = (find_max(summed))/875; //what does 875 means ...plot the vertical size?
 
-  background(0); 
+  background(0);
 
   if (draw_sum !=0)
   {
@@ -44,7 +44,7 @@ void plotdata()
 }
 
 
-void setup() 
+void setup()
 {
   println(Serial.list());
   String portName = Serial.list()[0]; //This is the index into the serial list, if you only have one serial device the index is 0
@@ -52,7 +52,7 @@ void setup()
 
   summed = new double[288];
 
-  for (int i = 0; i < 288; i++) 
+  for (int i = 0; i < 288; i++)
   {
     summed[i] = 0;
   }
@@ -62,14 +62,14 @@ void setup()
 
 void draw()
 {
-  if ( myPort.available() > 0) 
-  {  
+  if ( myPort.available() > 0)
+  {
     val = myPort.readStringUntil('\n');         // read it and store it in val
     if (val != null)
     {
-      data = int(split(val, ',')); 
+      data = int(split(val, ','));
 
-      for (int i = 0; i < data.length; i++) 
+      for (int i = 0; i < data.length; i++)
       {
         if (i<summed.length)
         {
@@ -86,14 +86,14 @@ void draw()
 
 void keyPressed() {
 
-  if (key == 'c' ) 
+  if (key == 'c' )
   {
-    for (int i = 0; i < summed.length; i++) 
+    for (int i = 0; i < summed.length; i++)
     {
       summed[i] = 0;
     }
-  } 
-  else if (key == 't' ) 
+  }
+  else if (key == 't' )
   {
     if(draw_sum==1)
     {
@@ -103,8 +103,8 @@ void keyPressed() {
     {
       draw_sum = 1;
     }
-  } 
-  else 
+  }
+  else
   {
   }
 }
